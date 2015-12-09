@@ -2,6 +2,10 @@ $(document).ready(function() {
   init();
 });
 
+function link(page) {
+  window.location.href = rootPage + "/" + page;
+}
+
 function init() {
   $(".register .btn").click(function(e) {
     e.preventDefault();
@@ -43,7 +47,6 @@ function signup() {
 }
 
 function signupSuccess(email) {
-  toggleSignupButton(false);
   $(".register").fadeOut(500, function() {
     $(".registered .email").html(email);
     $(".registered").fadeIn(500);

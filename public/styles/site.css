@@ -1,0 +1,144 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #15A4FA;
+  border-color: #1B93DC;
+}
+
+.btn-primary:hover {
+  background-color: #0588D7;
+  border-color: #0588D7;
+}
+
+.navbar {
+  margin-bottom: 0px;
+  min-height: 80px;
+  border: none;
+}
+
+.navbar-collapse {
+  border: none;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.navbar-brand {
+  padding-top: 5px;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+  background-color: #2ED0F3;
+}
+
+.navbar-nav > li > a {
+  font-weight: 300;
+  line-height: 50px;
+  font-size: 24px;
+  padding-left: 25px;
+  padding-right: 25px;
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .navbar-nav > li > a {
+    font-weight: 400;
+    line-height: 30px;
+    font-size: 16px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .navbar-header {
+    min-height: 72px;
+  }
+
+  .navbar-collapse {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.jumbotron {
+  min-height: 310px;
+  background: url('../images/jumbotron.png') no-repeat bottom center;
+  background-color: #2ED0F3;
+  color: #FFFFFF;
+  padding: 60px 0px;
+}
+
+.jumbotron h1 {
+  font-weight: 100;
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+footer {
+  padding: 20px 0px 60px;
+  background-color: #F0F0F0;
+  color: #9A9A9A;
+}
+
+footer a:hover {
+  color: #323232;
+}
+
+footer a {
+  color: #888888;
+}
+
+footer .copyright {
+  text-align: right;
+}
+
+.register {
+  margin-top: 10px;
+}
+
+.register p {
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.register p a {
+  color: #FFFFFF;
+}
+
+.register .email {
+  height: 50px;
+  border-radius: 0px;
+  padding: 0px 10px;
+  font-size: 18px;
+}
+
+.register .btn {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+}
+
+.register.has-error .form-control {
+  border: 2px solid #EC7B65;
+}
+
+.register.has-error .help-block {
+  margin-top: 0px;
+  background-color: #EC7B65;
+  color: #FFFFFF;
+  padding: 5px 10px;
+}
+
+.registered {
+  font-size: 18px;
+  font-weightL 300;
+  padding: 30px 20px;
+}

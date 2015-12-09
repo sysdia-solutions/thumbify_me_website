@@ -9,6 +9,7 @@ $page = explode("/", $_SERVER["REQUEST_URI"]);
 $page = $page[count($page)-1];
 
 $rootPath = (isIndex($page) ? "." : "..");
+$rootPage = $_SERVER["SCRIPT_NAME"];
 
 $page = (isIndex($page) ? "about" : $page);
 $page = (!file_exists("templates/{$page}.html") ? "404" : $page);
