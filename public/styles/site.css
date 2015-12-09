@@ -23,6 +23,15 @@ a:hover {
 }
 
 
+.panel-primary {
+  border-color: #1B93DC;
+}
+
+.panel-primary>.panel-heading {
+  background-color: #15A4FA;
+  border-color: #1B93DC;
+}
+
 .btn-primary {
   background-color: #15A4FA;
   border-color: #1B93DC;
@@ -95,7 +104,12 @@ a:hover {
   margin-bottom: 30px;
 }
 
+.body-text {
+  font-size: 16px;
+}
+
 footer {
+  margin-top: 20px;
   padding: 20px 0px 60px;
   background-color: #F0F0F0;
   color: #9A9A9A;
