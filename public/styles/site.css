@@ -10,6 +10,19 @@ a:hover {
   text-decoration: none;
 }
 
+.form-control {
+  height: 50px;
+  border-radius: 0px;
+  padding: 0px 10px;
+  font-size: 18px;
+}
+
+.btn {
+  height: 50px;
+  font-size: 18px;
+}
+
+
 .btn-primary {
   background-color: #15A4FA;
   border-color: #1B93DC;
@@ -100,6 +113,16 @@ footer .copyright {
   text-align: right;
 }
 
+@media (max-width: 991px) {
+  footer, footer .copyright {
+    text-align: center;
+  }
+
+  footer .copyright {
+    margin-top: 5px;
+  }
+}
+
 .register {
   margin-top: 10px;
 }
@@ -111,13 +134,6 @@ footer .copyright {
 
 .register p a {
   color: #FFFFFF;
-}
-
-.register .email {
-  height: 50px;
-  border-radius: 0px;
-  padding: 0px 10px;
-  font-size: 18px;
 }
 
 .register .btn {
@@ -141,4 +157,138 @@ footer .copyright {
   font-size: 18px;
   font-weightL 300;
   padding: 30px 20px;
+}
+
+.supported-types {
+  text-align: center;
+}
+
+.supported-types h3 {
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.supported-types .well {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.supported-type {
+  width: 66px;
+  height: 66px;
+  background-size: 66px 66px;
+  background-position: no-repeat;
+  display: inline-block;
+}
+
+.supported-type.pdf {
+  background-image: url('../images/supported/00-Adobe-PDF-Document.png');
+}
+.supported-type.doc {
+  background-image: url('../images/supported/01-Microsoft-Word.png');
+}
+.supported-type.xls {
+  background-image: url('../images/supported/02-Microsoft-Excel.png');
+}
+.supported-type.ppt {
+  background-image: url('../images/supported/03-Microsoft-PowerPoint.png');
+}
+.supported-type.psd {
+  background-image: url('../images/supported/04-Adobe-Photoshop-PSD-Document.png');
+}
+.supported-type.gif {
+  background-image: url('../images/supported/05-Image-GIF.png');
+}
+.supported-type.bmp {
+  background-image: url('../images/supported/06-Image-BMP.png');
+}
+.supported-type.jpg {
+  background-image: url('../images/supported/07-Image-JPEG.png');
+}
+.supported-type.png {
+  background-image: url('../images/supported/08-Image-PNG.png');
+}
+.supported-type.tif {
+  background-image: url('../images/supported/09-Image-TIFF.png');
+}
+.supported-type.wmv {
+  background-image: url('../images/supported/10-Video-WMV.png');
+}
+.supported-type.mpg {
+  background-image: url('../images/supported/11-Video-MPEG.png');
+}
+.supported-type.avi {
+  background-image: url('../images/supported/12-Video-AVI.png');
+}
+.supported-type.html {
+  background-image: url('../images/supported/13-Web-HTML.png');
+}
+
+.tryme {
+  background-color: #2ED0F3;
+  padding: 10px 10px 0px;;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.tryme > * {
+  margin-bottom: 10px;
+}
+
+.tryme label {
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.tryme .url {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 60%;
+}
+
+.tryme-well {
+  border: 1px solid #2ED0F3;
+  border-top: none;
+  color: #888888;
+}
+
+@media (max-width: 767px) {
+  .tryme .url {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+}
+
+.modal-content {
+  border-radius: 0px;
+}
+
+.modal-header {
+  border: none;
+  background-color: #2ED0F3;
+  color: #FFFFFF;
+}
+
+.modal-header .close {
+  color: #FFFFFF;
+  opacity: 0.9;
+}
+
+.modal-body {
+  text-align: center;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+.modal-body h2 {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.modal-body img {
+  border: 1px solid #AAAAAA;
+  margin-bottom: 20px;
 }
