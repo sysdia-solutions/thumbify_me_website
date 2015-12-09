@@ -14,7 +14,6 @@
     <![endif]-->
     <script>
       var api = "<?php echo $config["api"];?>";
-      var accessToken = "<?php echo $accessToken;?>";
       var rootPage = "<?php echo $rootPage;?>";
       var rootUrl = "<?php echo $rootUrl;?>";
     </script>

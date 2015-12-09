@@ -71,13 +71,13 @@ function signupError(reason) {
 
 function tryme() {
   var url = $(".tryme .url").val();
+  $("#tryme-modal .modal-body").html("<h2>Please wait whilst the thumbifier deals with your request.</h2>");
   $("#tryme-modal").modal("show").on("hidden.bs.modal", function() { trymeReset() });
 
   $.ajax({
     type: "POST",
-    url: api + "/",
+    url: rootUrl + "request.php",
     data: {
-      "access_token": accessToken,
       "media_url": url,
       "callback_url": rootUrl + "callback.php",
       "dimensions": "500x500"

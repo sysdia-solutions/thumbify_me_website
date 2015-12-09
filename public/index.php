@@ -14,7 +14,6 @@ function cleanCache($time) {
   }
 }
 
-
 cleanCache(180);
 
 $config = parse_ini_file("../config.ini");
@@ -30,11 +29,6 @@ $page = (isIndex($page) ? "about" : $page);
 $page = (!file_exists("templates/{$page}.html") ? "404" : $page);
 
 $menuItems = ["about", "how to use", "pricing"];
-
-$context = stream_context_create(array('http' => array('header'  => "Authorization: Bearer " . $config["api_key"])));
-$userData = json_decode(file_get_contents($config["api"] . "/users/" . $config["api_email"], false, $context), true);
-
-$accessToken = $userData["access_token"];
 
 require_once("templates/header.php");
 require_once("templates/{$page}.html");
