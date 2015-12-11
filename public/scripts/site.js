@@ -6,10 +6,6 @@ $(document).ready(function() {
   init();
 });
 
-function link(page) {
-  window.location.href = rootPage + "/" + page;
-}
-
 function init() {
   $(".register .btn").click(function(e) {
     e.preventDefault();

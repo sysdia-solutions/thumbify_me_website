@@ -1,9 +1,9 @@
   <footer>
     <div class="container">
       <div class="col-md-8">
-        <a href="#" onclick="link('tos');">terms of service</a>
+        <a href="tos">terms of service</a>
         &nbsp;&#124;&nbsp;
-        <a href="#" onclick="link('privacy');">privacy policy</a>
+        <a href="privacy">privacy policy</a>
         &nbsp;&#124;&nbsp;
         <a href="mailto:info@thumbify.co.uk">info@thumbify.co.uk</a>
       </div>
