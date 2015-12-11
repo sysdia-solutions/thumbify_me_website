@@ -153,3 +153,23 @@ function displayResults(image) {
   trymeReset();
   $("#tryme-modal .modal-body").html("<h2>Success!!</h2><img src='data:image/jpeg;charset=utf-8;base64," + image + "' />");
 }
+
+function getSupportedMimeTypes() {
+  $.ajax({
+    type: "GET",
+    url: api,
+    success: function(output, textStatus, jqXHR) {
+      displayMimeTypes(output);
+    },
+    error: function(jqXHR, textStatus, error) {
+    }
+  });
+}
+
+function displayMimeTypes(types) {
+  var items = [];
+  $.each(types, function (id, option) {
+    items.push('<li>' + option + '</li>');
+  });
+  $(".mime-types").html(items.join(''));
+}
