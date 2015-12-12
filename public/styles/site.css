@@ -108,6 +108,15 @@ a:hover {
   font-size: 16px;
 }
 
+.body-text h2:not(:first-of-type) {
+  margin-top: 45px;
+}
+
+.body-text h3,
+.body-text h4 {
+  margin-top: 35px;
+}
+
 footer {
   margin-top: 20px;
   padding: 20px 0px 60px;
@@ -322,4 +331,66 @@ footer .copyright {
   width: calc(25% - 10px);
   color: #31708F;
   background-color: #D9EDF7;
+}
+
+.alert-code {
+  color: #EEE8D5;
+  background-color: #052730;
+  border-color: #323232;
+}
+
+.alert-default {
+  color: #777777;
+  background-color: #E8E8E8;
+  border-color: #D6D6D6;
+}
+
+.alert-default a {
+  color: #777777;
+}
+
+.alert ul {
+  padding-left: 25px;
+}
+
+.alert ul li:not(:last-of-type) {
+  margin-bottom: 15px;
+}
+
+.code {
+  font-family: monospace;
+}
+
+.code pre {
+  color: inherit;
+  border: none;
+  background-color: inherit;
+  font-size: inherit;
+  margin: 0px;
+}
+
+.code em {
+  color: #85990B;
+}
+
+.code .highlight {
+  color: #E8AE13;
+}
+
+strong.required:before {
+  content: "required";
+  color: #A94442;
+  position: absolute;
+  margin-top: -9px;
+  font-size: 9.5px;
+  font-style: italic;
+}
+
+strong.optional:before {
+  content: "optional";
+  color: #31708F;
+  position: absolute;
+  margin-top: -9px;
+  font-size: 9.5px;
+  font-style: italic;
 }

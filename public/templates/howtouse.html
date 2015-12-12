@@ -1,0 +1,353 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>How to use</h1>
+  </div>
+</div>
+<div class="container body-text">
+  <h2>Introducing the thumbifier</h2>
+  <p>If you want to thumbify your files (for whatever reason) then all you need is an api-key to use the thumbifier service.</p>
+  <p>If you need an api-key, then just head back to the home page (click the '<a href="about">about</a>' link at the top) and enter your email address and you should have an api-key emailed to you.</p>
+  <p>When you sign up, you're put on a free account that allows you to create 10 thumbnails every 10 minutes. If you try and create any more then the system will moan at you and you'll have to come back when the time is ready.</p>
+
+  <h2>How does it work?</h2>
+  <p>It's really quite straight forward... All you have to do is make a <code>POST</code> request to the thumbifier service api and giving it some key information (we'll go into this in detail further down the page). The most important thing is you pass it a url (shorter way of saying web address) to a file on the internet or even just to a website.</p>
+  <p>There's no need to worry about uploading a file via a web post as we do the downloading for you when the thumbifer works its magic. Once the thumbnail for your provided file has been created, we push it back to a url of your choice (we call this the callback url).</p>
+  <p>"Why do you have to push it back to a callback?!" we hear you ask... followed by "Can't we just push and wait for the page to respond with the thumbnail?"</p>
+  <p><strong>The short answer is:</strong> No</p>
+  <p><strong>And the long answer is:</strong> Noooooooooooooooooooooooooooooo</p>
+  <p><strong>And the actual helpful answer is:</strong> The reason we pass it to a callback is down to web time outs; sure if you pass a small file (small in filesize) and the thumbifier is twiddling its.....thumb, then your thumbnail would be generated very quickly and returned almost instantly.</p>
+  <p>But, what if you're pushing a huge movie file to be thumbified? Or if the thumbifier is working its little socks off then you would be waiting for a while for your thumbnail to come back. Probably too long, which would mean your web connection would most likely time out and everyone would be sad.</p>
+  <p>So the benefit of having the callback url means no matter how big the file, or how long the wait, you will always get your thumbnail back for you to process in your our special way.</p>
+
+  <h2>What files can be thumbified?</h2>
+  <p>You can see which mime-types the thumbifier supports by viewing the <a href="supported">supported mime-types</a> page or by making a <code>GET</code> request to the api:
+  <div class="alert alert-info code">
+    GET http://api.thumbify.me/
+  </div>
+  <p>...and you'll get a list back of all the supported mimetypes.</p>
+  <p>The returned list is an array of supported mime-types in a JSON Response format.</p>
+  <div class="alert alert-success code">
+<pre>
+<em>HTTP Status Code: 200</em>
+[
+  "image/jpg",
+  "image/pjpeg",
+  "image/jpeg",
+  "image/gif",
+  "image/png",
+  "image/bmp",
+  "image/x-bmp",
+  "image/x-bitmap"
+]
+</pre>
+  </div>
+
+  <p>It is also possible to query the api to check if a specific mime-type is supported (you need to replace the forward slash '/' with an underscore '_'):</p>
+  <div class="alert alert-info code">
+    GET http://api.thumbify.me/:mime-type
+  </div>
+  <p>The result returned is either 'true' if the mime-type is supported or 'false' if it is not:</p>
+  <p><strong>Supported mime-type</strong></p>
+  <div class="alert alert-info code">
+    GET http://api.thumbify.me/image_png
+  </div>
+  <div class="alert alert-success code">
+<pre>
+<em>HTTP Status Code: 200</em>
+true
+</pre>
+  </div>
+  <p><strong>Unsupported mime-type</strong></p>
+  <div class="alert alert-info code">
+    GET http://api.thumbify.me/made_up_type
+  </div>
+  <div class="alert alert-success code">
+<pre>
+<em>HTTP Status Code: 200</em>
+false
+</pre>
+  </div>
+
+  <h2>Thumbifying your own files</h2>
+  <p>There are two parts to the thumbifier process, the first is where you <code>POST</code> a set of input parameters to the service containing a URL to the media you want thumbifying. The second part is where the thumbifier service makes a <code>POST</code> back to you containing the converted media jpg.</p>
+  <p>So to get going you're going to need two separate scripts, one to <code>POST</code> your data and one to receive <code>POST</code> data from the thumbifier.</p>
+  <h3>Thumbifier input</h3>
+  <p>Before you can use the thumbifier service, you're going to need an <code>api-key</code> so if you don't have one already then go to the <a href="about">about</a> page and sign up for free and you'll receive an <code>api-key</code> via email.</p>
+  <p>Once you have your <code>api-key</code> you're ready to start using the thumbifier service.</p>
+  <h4>Getting an access token</h4>
+  <p>The <code>access_token</code> is your temporary access to the thumbifier service. Why do you need an <code>access_token</code> if you have an <code>api-key</code>? Well, the <code>api-key</code> is your super secret secure key for your account, it's like your password which means you don't want anyone finding it out. This means if you wanted to call the thumbifier service via a JavaScript function and we relied on your <code>api-key</code> for authentication then you'd have to put it in plain text meaning others could steal your account.</p>
+  <p>The <code>access_token</code> on the other hand is a temporary grant to the thumbifier service, once you generate one you have 10 minutes to use it before it expires and once you use it then it also becomes invalid. This means you can use an <code>access_token</code> in your JavaScript code if you need to as even if someone gets hold of it, as soon as you've used the <code>access_token</code> it becomes useless to anyone else.</p>
+  <p>To retrieve an <code>access_token</code> you need to make an authorized <code>GET</code> request to the api:</p>
+
+  <div class="alert alert-info code">
+    GET http://api.thumbify.me/users/:email<br/>
+    <em>//HTTP Headers</em><br/>
+    <code>Authorization: Bearer :api_key</code>
+  </div>
+
+  <p>The api will return useful information about your user account:</p>
+  <div class="alert alert-success code">
+<pre>
+<em>HTTP Status Code: 200</em>
+{
+  "usage_reset_at": "2015-12-10T15:42:32Z",
+  "usage_limit": 10,
+  "usage_counter": 1,
+  "total_usage": 71,
+  "email": "myemail@goeshere.com",
+  "access_token": "721e58d7-1351-40bf-b9ce-5464e79b877b"
+}
+</pre>
+  </div>
+
+  <p><strong>JSON response explained:</strong></p>
+  <div class="alert alert-default">
+    <ul>
+      <li><strong>usage_reset_at:</strong> The last date and time your <code>usage_counter</code> was reset at. If it is over 10 minutes ago then your <code>usage_counter</code> is reset back to zero.</li>
+      <li><strong>usage_limit:</strong> The amount of times you're allowed to use the thumbifier within the 10 minute window. If your <code>usage_counter</code> is greater or equal to this number then you will be temporarily denied access to the service.</li>
+      <li><strong>usage_counter:</strong> The number of times you've used the thumbifier within your current usage cycle, since your <code>usage_counter</code> was last reset.</li>
+      <li><strong>total_usage:</strong> The total number of times you've used the thumbifier since your account was created.</li>
+      <li><strong>email:</strong> The email address the account is registered with.</li>
+      <li><strong>access_token:</strong> The temporary access token required to convert your media. It expires after 10 minutes.</li>
+    </ul>
+  </div>
+
+  <p>You'll notice above that the <code>GET</code> request requires Authorization, which is where your <code>api-key</code> comes in. You provide your authorization information via a HTTP Header, which you'll need to do via server side code as it will contain your super secret <code>api-key</code> so you don't want to expose that.</p>
+
+  <p>So how would you go about actually doing this in code? Well, we'll provide an example below of how you would do it in <code>PHP</code> but pretty much all web based languages can call this service...</p>
+
+  <div class="alert alert-code code">
+<pre>
+<em>//Set the stream context to contain an Authorization Header</em>
+$header = array("header" => "Authorization: Bearer api_key_goes_here");
+$context = stream_context_create( array('http' => $header ));
+
+<em>//Call the api endpoint passing in the above stream $context to retrive your user details</em>
+$response = file_get_contents("http://api.thumbify.me/users/myemail@goeshere.com", false, $context);
+
+<em>//If something has gone wrong then the $response will be false</em>
+if ($response !== false) {
+  <em>//The api response is in JSON format, so decode it into a PHP array</em>
+  $userData = json_decode($response, true);
+  <em>//Get the access token from the decoded JSON</em>
+  $accessToken = $userData["access_token"];
+}
+</pre>
+  </div>
+
+  <p>So now you should have an understanding of how to get your <code>access_token</code> to use. Next we'll expand this into a complete script to also call the thumbifier service.</p>
+
+  <h4>Calling the thumbifier</h4>
+  <p>Now you're ready to thumbify your media file, you'll just have to <code>POST</code> your request to the api:</p>
+
+  <div class="alert alert-info code">
+    POST http://api.thumbify.me/
+  </div>
+
+  <p><strong>Request parameters</strong></p>
+  <div class="alert alert-default">
+    <ul>
+      <li><strong class="required text-danger">access_token:</strong> The temporary code received from your user details request. It expires after 10 minutes.</li>
+      <li><strong class="required text-danger">media_url:</strong> A publically accessible URL that points to the file you want converting.</li>
+      <li><strong class="required text-danger">callback_url:</strong> A publically accessible URL that points to your code that will accept a POST from the thumbifier service. This is the code where you process the results of the request.</li>
+      <li><strong>dimensions:</strong> The new size dimensions for the generated jpg specified as an <a href="http://www.imagemagick.org/script/command-line-processing.php#geometry">ImageMagick geometry parameter</a>. If this parameter is not provided it will default to <code>100x100</code></li>
+      <li><strong>quality:</strong> The jpg compression level to use for the generated jpg (between 0 - 100). The higher the number, the better the quality but larger the file size. If this parameter is not provided it will default to <code>72</code></li>
+    <li><strong>personal_reference:</strong> A custom identifier you can provide at point of request, when the thumbifier service responds to your <code>callback_url</code> it will contain this <code>personal_reference</code> to make it easier for you to identify the input.</li>
+    <li><strong class="optional text-info">page:</strong> Specifies the page to use on certain file formats, such as PDF or Office documents. As the thumbifier service only generates one output jpg then if the input format has multiple pages then you must specify which page to use. If this parameter is not provided but required it will default to <code>1</code>.</li>
+    <li><strong class="optional text-info">frame:</strong> Specifieds the frame to use on a video file format. This will be the time within the video you wish to create the thumbnail of and is provided in <code>hh:mm:ss</code> format, so if the required frame is at 1 minute 32 seconds of the video then the <code>frame</code> would be <code>00:01:32</code>. If this parameter is not provided but required it will default to <code>00:00:01</code></li>
+    </ul>
+  </div>
+
+  <p>The api will either respond with a success or failure as follows:</p>
+
+  <p><strong>Request failure</strong></p>
+
+  <p>There are three types of failure that can occur when calling the thumbifier on this route:</p>
+  <p><strong># 401 Unauthorized</strong> - An invalid <code>access_token</code> has been provided. Either expired or incorrect.</p>
+  <div class="alert alert-warning code">
+<pre>
+<em>HTTP Status Code: 401</em>
+{
+  "message": "AccessToken 'afb5dad2-5bcc-4378-ad18-15f654293df5' is not authorized"
+}
+</pre>
+  </div>
+  <p><strong># 429 Too Many Requests</strong> - Your <code>usage_counter</code> on your account has exceeded your <code>usage_limit</code>.</p>
+  <div class="alert alert-warning code">
+<pre>
+<em>HTTP Status Code: 429</em>
+{
+  "message": "User limit exceeded - 10/10"
+}
+</pre>
+  </div>
+    <p><strong># 400 Bad Request</strong> - The <code>media_url</code> provided is not a well formed URL or is blank.</p>
+    <div class="alert alert-warning code">
+<pre>
+<em>HTTP Status Code: 400</em>
+{
+  "message": "Request '' is invalid"
+}
+</pre>
+  </div>
+
+    <p>Each request failure returns an appropriate <code>HTTP Status Code</code> and a JSON payload containing a <code>message</code> key which provides additional information on the failure.</p>
+
+
+  <p><strong>Request success</strong></p>
+
+  <p>If everything is fine with the api request, then the thumbifier will receive your request to convert and return a <code>GUID</code> which is your unique identification number of your request. This <code>GUID</code> is also included in the <code>POST</code> made to your <code>callback_url</code> so it can make it easier for you to identify the input.</p>
+
+  <div class="alert alert-success code">
+<pre>
+<em>HTTP Status Code: 200</em>
+28423859-3077-4b25-844b-18df5742926c
+</pre>
+  </div>
+
+  <p>So how would you make this request? Expanding the <code>PHP</code> code that we started earlier to get the <code>access_token</code> we can continue to call the thumbifier service with our desired parameters and check the response:</p>
+
+  <div class="alert alert-code code">
+<pre>
+<em>//request.php</em>
+
+<em>//Get access_token code from above</em>
+$header = array("header" => "Authorization: Bearer api_key_goes_here");
+$context = stream_context_create( array('http' => $header ));
+$response = file_get_contents("http://api.thumbify.me/users/myemail@goeshere.com", false, $context);
+
+$accessToken = "";
+if ($response !== false) {
+  $userData = json_decode($response, true);
+  $accessToken = $userData["access_token"];
+}
+
+<em>//Create an array to set the parameters</em>
+$data = array(
+  "access_token"       => $accessToken,
+  "media_url"          => "http://www.yourwebaddress.com/files/work.pdf",
+  "dimensions"         => "64x64",
+  "callback_url"       => "http://www.yourwebaddress.com/callback.php",
+  "personal_reference" => "work"
+);
+
+<em>//Set up a cURL request to the api, this allows us to query the HTTP response status code</em>
+$curl = curl_init("http://api.thumbify.me");
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+<em>//Tell cURL we are doing a POST request and provide our POSTFIELDS $data array</em>
+curl_setopt($curl, CURLOPT_POST, true);
+curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+<em>//Execute the cURL request and capture the response in the $result variable</em>
+$result = curl_exec($curl);
+<em>//Get the HTTP info from the cURL request (this contains the HTTP status code)</em>
+$info = curl_getinfo($curl);
+
+curl_close($curl);
+
+<em>//Do something different depending on the response HTTP status code</em>
+if($info["http_code"] === 200) {
+  echo "everything went ok, the response GUID is ${$result}";
+} else {
+  echo "Something went wrong, error is: {$result}";
+}
+</pre>
+  </div>
+
+  <p>The above code is a bit overly simplistic, but it highlights how you can make a request to the thumbifier service via your server side code. It's also possible to retrieve your <code>access_token</code> via server side code and then inject it into your JavaScript and make the above request using a JavaScript <code>POST</code> either via a HTML form or an Ajax request.</p>
+  <p>Once you've called the thumbifier service, it will do it's processing magic and then <code>POST</code> the results to your <code>callback_url</code>, so we'll discuss how to deal with the thumbifier service callback.</p>
+
+  <h4>Handling the thumbifier callback</h4>
+  <p>You need to have a script somewhere that is publically web accessible that the thumbifier can <code>POST</code> the thumbified results to. The results are provided in a JSON format and the structure does not change whether the service was successful or has failed with the processing:</p>
+
+  <p><strong>JSON data explained</strong></p>
+  <div class="alert alert-default">
+    <ul>
+      <li><strong>status:</strong> This will be <code>ok</code> if processing was successful or <code>error</code> if something went wrong.</li>
+      <li><strong>response_id:</strong> This is the unique GUID that was returned when the thumbifier api was initially called.</li>
+      <li><strong>personal_reference:</strong> This is your reference you provided when the thumbifier api was initially called.</li>
+      <li><strong>payload:</strong> This contains a Base64 encoded jpg if the result is <code>status: ok</code> or it contains the error message if the result is <code>status: error</code></li>
+    </ul>
+  </div>
+
+  <p><strong>Callback failure</strong></p>
+
+  <p>There are three types of failure that can occur within the thumbifier process:</p>
+
+  <p><strong># File not found</strong> - If the provided <code>media_url</code> does not resolve then it cannot be downloaded for thumbification.</p>
+  <div class="alert alert-warning code">
+<pre>
+{
+  "status": "error",
+  "response_id": "28423859-3077-4b25-844b-18df5742926c",
+  "personal_reference": "work",
+  "payload": "[001] File not found"
+}
+</pre>
+  </div>
+
+  <p><strong># File limit exceeded</strong> - If the provided <code>media_url</code> is a link to a file that is larger than 512MegaBytes in file size then it is too large.</p>
+  <div class="alert alert-warning code">
+<pre>
+{
+  "status": "error",
+  "response_id": "28423859-3077-4b25-844b-18df5742926c",
+  "personal_reference": "work",
+  "payload": "[002] File limit exceeded"
+}
+</pre>
+  </div>
+
+  <p><strong># Mime-type not supported</strong> - If the provided <code>media_url</code> is of a mime-type that isn't supported then the thumbifier cannot process it.</p>
+  <div class="alert alert-warning code">
+<pre>
+{
+  "status": "error",
+  "response_id": "28423859-3077-4b25-844b-18df5742926c",
+  "personal_reference": "work",
+  "payload": "[003] mime-type made_up_type not supported"
+}
+</pre>
+  </div>
+
+  <p><strong>Callback success</strong></p>
+
+  <p>If everything has gone well with the thumbification process then the JSON data will contain a Base64 encoded payload of the converted jpg. All you need to do is use the payload as is or Base64 decode the payload string back into the jpg binary data and save it to disk.</p>
+
+  <div class="alert alert-success code">
+<pre>
+{
+  "status": "ok",
+  "response_id": "28423859-3077-4b25-844b-18df5742926c",
+  "personal_reference": "work",
+  "payload": "/9j/4AAQSkZJRgABAQEARwBHAAD/2wBDAAYEBAQFBAYFBQYJBgUGCQsIBgYICwwKCgsKCgwQDAwMDAwMEAwODxAPD
+              gwTExQUExMcGxsbHCAgICAgICAgICD/2wBDAQcHBw0MDRgQEBgaFREVGiAgICAgICAgICAgICAgICAgICAgICAgIC"
+}
+</pre>
+  </div>
+
+  <p>Let's take a look at some sample <code>PHP</code> code of how we'd receive the thumbifier service <code>POST</code>. The below is our <code>callback_url</code> code that we pass through to the thumbifier service. The basic premise of it is to receive the <code>POST</code> data, extract the converted jpg and save it to disk with the file name of our given <code>personal_reference</code>. This is just an example of what you can do, but obviously you can use the data to suit whatever need you have.</p>
+
+  <div class="alert alert-code code">
+<pre>
+<em>//callback.php</em>
+
+<em>//Only process the payload if the status is 'ok'</em>
+if ($_POST["status"] === "ok") {
+  <em>//Set the filename of our new file to the 'personal_reference'.jpg</em>
+  $filename = $_POST["personal_reference"] . ".jpg";
+  <em>//Save the Base64 decoded payload</em>
+  file_put_contents(__DIR__ . "/{$filename}", base64_decode($_POST["payload"]) );
+}
+</pre>
+  </div>
+
+  <p>Once the <code>callback_url</code> is called, it should now save a copy of the thumbified jpg to disk. And that's all there is to it!</p>
+
+  <hr/>
+  <p>Don't forget that you don't have unlimited goes on the thumbifier, every time you use the service, your <code>usage_counter</code> goes up by 1 and when you reach your <code>usage_limit</code> then you will be temporarily rejected from using the service. Your <code>usage_counter</code> is reset every 10 minutes (so if you have a free account, this means you can create 10 thumbnails per 10 minutes). However, if you have a paid subscription then your <code>usage_limit</code> will be higher.</p>
+
+  <p>If you're still not getting it or maybe you have some questions, comments, complaints or suggestions then just drop us an email at <a href="mailto:info@thumbify.co.uk">info@thumbify.co.uk</a> and we'll do our best to help.</p>
+
+</div>
