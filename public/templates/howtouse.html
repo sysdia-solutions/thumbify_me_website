@@ -7,7 +7,7 @@
   <h2>Introducing the thumbifier</h2>
   <p>If you want to thumbify your files (for whatever reason) then all you need is an api-key to use the thumbifier service.</p>
   <p>If you need an api-key, then just head back to the home page (click the '<a href="about">about</a>' link at the top) and enter your email address and you should have an api-key emailed to you.</p>
-  <p>When you sign up, you're put on a free account that allows you to create 10 thumbnails every 10 minutes. If you try and create any more then the system will moan at you and you'll have to come back when the time is ready.</p>
+  <p>When you sign up, you're put on a free account that allows you to create 10 thumbnails every 60 minutes. If you try and create any more then the system will moan at you and you'll have to come back when the time is ready.</p>
 
   <h2>How does it work?</h2>
   <p>It's really quite straight forward... All you have to do is make a <code>POST</code> request to the thumbifier service api and giving it some key information (we'll go into this in detail further down the page). The most important thing is you pass it a url (shorter way of saying web address) to a file on the internet or even just to a website.</p>
@@ -103,8 +103,8 @@ false
   <p><strong>JSON response explained:</strong></p>
   <div class="alert alert-default">
     <ul>
-      <li><strong>usage_reset_at:</strong> The last date and time your <code>usage_counter</code> was reset at. If it is over 10 minutes ago then your <code>usage_counter</code> is reset back to zero.</li>
-      <li><strong>usage_limit:</strong> The amount of times you're allowed to use the thumbifier within the 10 minute window. If your <code>usage_counter</code> is greater or equal to this number then you will be temporarily denied access to the service.</li>
+      <li><strong>usage_reset_at:</strong> The last date and time your <code>usage_counter</code> was reset at. If it is over 60 minutes then your <code>usage_counter</code> is reset back to zero.</li>
+      <li><strong>usage_limit:</strong> The amount of times you're allowed to use the thumbifier within the 60 minute window. If your <code>usage_counter</code> is greater or equal to this number then you will be temporarily denied access to the service.</li>
       <li><strong>usage_counter:</strong> The number of times you've used the thumbifier within your current usage cycle, since your <code>usage_counter</code> was last reset.</li>
       <li><strong>total_usage:</strong> The total number of times you've used the thumbifier since your account was created.</li>
       <li><strong>email:</strong> The email address the account is registered with.</li>
@@ -346,7 +346,7 @@ if ($_POST["status"] === "ok") {
   <p>Once the <code>callback_url</code> is called, it should now save a copy of the thumbified jpg to disk. And that's all there is to it!</p>
 
   <hr/>
-  <p>Don't forget that you don't have unlimited goes on the thumbifier, every time you use the service, your <code>usage_counter</code> goes up by 1 and when you reach your <code>usage_limit</code> then you will be temporarily rejected from using the service. Your <code>usage_counter</code> is reset every 10 minutes (so if you have a free account, this means you can create 10 thumbnails per 10 minutes). However, if you have a paid subscription then your <code>usage_limit</code> will be higher.</p>
+  <p>Don't forget that you don't have unlimited goes on the thumbifier, every time you use the service, your <code>usage_counter</code> goes up by 1 and when you reach your <code>usage_limit</code> then you will be temporarily rejected from using the service. Your <code>usage_counter</code> is reset every 60 minutes (so if you have a free account, this means you can create 10 thumbnails per 60 minutes). However, if you have a paid subscription then your <code>usage_limit</code> will be higher.</p>
 
   <p>If you're still not getting it or maybe you have some questions, comments, complaints or suggestions then just drop us an email at <a href="mailto:info@thumbify.co.uk">info@thumbify.co.uk</a> and we'll do our best to help.</p>
 
