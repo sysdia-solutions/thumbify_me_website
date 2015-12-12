@@ -9,7 +9,7 @@ $data = array(
   "access_token" => $accessToken,
   "media_url"    => $_POST['media_url'],
   "dimensions"   => "500x500",
-  "callback_url" => $_POST['callback_url'],
+  "callback_url" => $_POST['callback_url']
 );
 
 $curl = curl_init($config["api"] . "/");
