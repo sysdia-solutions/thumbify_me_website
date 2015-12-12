@@ -34,8 +34,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
-            <?php foreach($menuItems as $menuItem) { ?>
-              <li class="<?php if ($menuItem === $page) echo "active";?>"><a href="<?php echo str_replace(" ", "", $menuItem);?>"><?php echo $menuItem;?></a></li>
+            <?php foreach($menuItems as $menuItem) { $menuLink = str_replace(" ", "", $menuItem);?>
+              <li class="<?php if ($menuLink === $page) echo "active";?>"><a href="<?php echo $menuLink;?>"><?php echo $menuItem;?></a></li>
             <?php } ?>
           </ul>
         </div><!--/.nav-collapse -->
