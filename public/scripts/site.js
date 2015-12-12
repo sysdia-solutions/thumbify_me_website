@@ -39,6 +39,7 @@ function signup() {
   toggleSignupButton(true);
 
   $.ajax({
+    cache: false,
     type: "POST",
     url: api + "/users",
     data: { "email": email },
@@ -71,6 +72,7 @@ function tryme() {
   $("#tryme-modal").modal("show").on("hidden.bs.modal", function() { trymeReset() });
 
   $.ajax({
+    cache: false,
     type: "POST",
     url: rootUrl + "request.php",
     data: {
@@ -98,6 +100,7 @@ function trymeReset() {
 
 function trymeSuccess(responseId) {
   $.ajax({
+    cache: false,
     type: "GET",
     url: rootUrl + "results.php",
     data: { "response_id": responseId },
@@ -156,6 +159,7 @@ function displayResults(image) {
 
 function getSupportedMimeTypes() {
   $.ajax({
+    cache: false,
     type: "GET",
     url: api,
     success: function(output, textStatus, jqXHR) {
