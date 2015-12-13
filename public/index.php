@@ -19,7 +19,7 @@ $page = $page[count($page)-1];
 $page = ($page === "" ? "about" : $page);
 $page = (!file_exists("templates/{$page}.html") ? "404" : $page);
 
-$menuItems = ["about", "how to use", "pricing"];
+$menuItems = array("about", "how to use", "pricing");
 
 require_once("templates/header.php");
 require_once("templates/{$page}.html");

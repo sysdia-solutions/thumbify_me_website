@@ -3,7 +3,7 @@ $responseId = $_GET["response_id"];
 
 $file = __DIR__ . "/../cache/{$responseId}";
 
-$results = ["status" => "pending", "payload" => ""];
+$results = array("status" => "pending", "payload" => "");
 
 if (file_exists($file)) {
   $results = json_decode(file_get_contents($file), true);
