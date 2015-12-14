@@ -22,7 +22,7 @@
   <h2>What files can be thumbified?</h2>
   <p>You can see which mime-types the thumbifier supports by viewing the <a href="supported">supported mime-types</a> page or by making a <code>GET</code> request to the api:
   <div class="alert alert-info code">
-    GET http://api.thumbify.me/
+    GET https://api.thumbify.me/
   </div>
   <p>...and you'll get a list back of all the supported mimetypes.</p>
   <p>The returned list is an array of supported mime-types in a JSON Response format.</p>
@@ -44,12 +44,12 @@
 
   <p>It is also possible to query the api to check if a specific mime-type is supported (you need to replace the forward slash '/' with an underscore '_'):</p>
   <div class="alert alert-info code">
-    GET http://api.thumbify.me/:mime-type
+    GET https://api.thumbify.me/:mime-type
   </div>
   <p>The result returned is either 'true' if the mime-type is supported or 'false' if it is not:</p>
   <p><strong>Supported mime-type</strong></p>
   <div class="alert alert-info code">
-    GET http://api.thumbify.me/image_png
+    GET https://api.thumbify.me/image_png
   </div>
   <div class="alert alert-success code">
 <pre>
@@ -59,7 +59,7 @@ true
   </div>
   <p><strong>Unsupported mime-type</strong></p>
   <div class="alert alert-info code">
-    GET http://api.thumbify.me/made_up_type
+    GET https://api.thumbify.me/made_up_type
   </div>
   <div class="alert alert-success code">
 <pre>
@@ -80,7 +80,7 @@ false
   <p>To retrieve an <code>access_token</code> you need to make an authorized <code>GET</code> request to the api:</p>
 
   <div class="alert alert-info code">
-    GET http://api.thumbify.me/users/:email<br/>
+    GET https://api.thumbify.me/users/:email<br/>
     <em>//HTTP Headers</em><br/>
     <code>Authorization: Bearer :api_key</code>
   </div>
@@ -123,7 +123,7 @@ $header = array("header" => "Authorization: Bearer api_key_goes_here");
 $context = stream_context_create( array('http' => $header ));
 
 <em>//Call the api endpoint passing in the above stream $context to retrive your user details</em>
-$response = file_get_contents("http://api.thumbify.me/users/myemail@goeshere.com", false, $context);
+$response = file_get_contents("https://api.thumbify.me/users/myemail@goeshere.com", false, $context);
 
 <em>//If something has gone wrong then the $response will be false</em>
 if ($response !== false) {
@@ -141,7 +141,7 @@ if ($response !== false) {
   <p>Now you're ready to thumbify your media file, you'll just have to <code>POST</code> your request to the api:</p>
 
   <div class="alert alert-info code">
-    POST http://api.thumbify.me/
+    POST https://api.thumbify.me/
   </div>
 
   <p><strong>Request parameters</strong></p>
@@ -214,7 +214,7 @@ if ($response !== false) {
 <em>//Get access_token code from above</em>
 $header = array("header" => "Authorization: Bearer api_key_goes_here");
 $context = stream_context_create( array('http' => $header ));
-$response = file_get_contents("http://api.thumbify.me/users/myemail@goeshere.com", false, $context);
+$response = file_get_contents("https://api.thumbify.me/users/myemail@goeshere.com", false, $context);
 
 $accessToken = "";
 if ($response !== false) {
@@ -232,7 +232,7 @@ $data = array(
 );
 
 <em>//Set up a cURL request to the api, this allows us to query the HTTP response status code</em>
-$curl = curl_init("http://api.thumbify.me");
+$curl = curl_init("https://api.thumbify.me");
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
 <em>//Tell cURL we are doing a POST request and provide our POSTFIELDS $data array</em>
