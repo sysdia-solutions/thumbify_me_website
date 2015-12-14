@@ -328,6 +328,9 @@ footer .copyright {
   padding: 10px;
   color: #31708F;
   background-color: #D9EDF7;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 @media (min-width: 1000px) {

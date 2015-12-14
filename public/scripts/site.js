@@ -173,7 +173,7 @@ function getSupportedMimeTypes() {
 function displayMimeTypes(types) {
   var items = [];
   $.each(types, function (id, option) {
-    items.push('<li>' + option + '</li>');
+    items.push('<li alt="' + option + '" title="' + option + '">' + option + '</li>');
   });
   $(".mime-types").html(items.join(''));
 }
