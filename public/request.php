@@ -21,7 +21,7 @@ $result = curl_exec($curl);
 $info = curl_getinfo($curl);
 
 if ($result === false) {
-  $result = json_endode("An unknown error has occured. Try again!");
+  $result = json_encode("An unknown error has occured. Try again!");
 }
 curl_close($curl);
 
