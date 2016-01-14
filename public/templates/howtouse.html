@@ -200,7 +200,7 @@ if ($response !== false) {
 
   <div class="alert alert-success code">
 <pre>
-<em>HTTP Status Code: 200</em>
+<em>HTTP Status Code: 201</em>
 28423859-3077-4b25-844b-18df5742926c
 </pre>
   </div>
@@ -247,7 +247,7 @@ $info = curl_getinfo($curl);
 curl_close($curl);
 
 <em>//Do something different depending on the response HTTP status code</em>
-if($info["http_code"] === 200) {
+if($info["http_code"] === 201) {
   echo "everything went ok, the response GUID is ${$result}";
 } else {
   echo "Something went wrong, error is: {$result}";
