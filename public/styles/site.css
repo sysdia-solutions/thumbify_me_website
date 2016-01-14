@@ -46,6 +46,7 @@ a:hover {
   margin-bottom: 0px;
   min-height: 80px;
   border: none;
+  border-radius: 0px;
 }
 
 .navbar-collapse {
